@@ -1,17 +1,14 @@
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
-        res = []
-        
+        container = []
+        result = [0] * len(temperatures)
 
-        for i in range(len(temperatures)):
-            j = i + 1
-            counter = 1
-            while j < len(temperatures):
-                if temperatures[j] > temperatures[i]:
-                    break
-                j += 1
-                counter += 1
-            if j == len(temperatures):
-                counter = 0
-            res.append(counter)
-        return res
+        for i, t in enumerate(temperatures):
+            while container and t > container[-1][1]:
+                #if no next largest; counter is zero 
+                stackI, stackT = container.pop()
+                #if next down is largest; counter += 1
+                #if next number is largest; terminate
+                result[stackI] = i - stackI
+            container.append((i, t))
+        return result
