@@ -1,21 +1,18 @@
 class Solution:
     def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
-        stack = []
-        
-        for i in range(len(temperatures)):
-            j = i + 1
-            counter = 1
-            while j < len(temperatures):
-                if temperatures[i] >= temperatures[j]:
-                    counter += 1
-                    j += 1
-                else:
-                    stack.append(counter)
-                    break
-            #if there is nothing greater than then counter is zero 
-            if j == len(temperatures):
-                counter = 0
-                stack.append(counter)
-                print(counter)
-            print(stack)
-        return stack
+        container = []
+        result = [0] * len(temperatures)
+        for index, temperature in enumerate(temperatures):
+            while container and temperature > container[-1][1]:
+                stackI, stackT = container.pop()
+                result[stackI] = index - stackI
+            container.append([index,temperature])
+        return result
+            #use a dictionary to calculate the days with their index
+
+            #three scenarios 
+            #none is greater
+            #next one is greater
+            #couple more is greater 
+
+            
